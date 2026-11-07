@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lexicon for Naver · Settings</title>
+<style>
+  :root { --ink:#1a1a1a; --soft:#5a5f66; --faint:#8b9198; --line:#e3e5e8; --accent:#2f6feb; --accent-bg:rgba(47,111,235,.08); --bg:#fff; --bg-soft:#f7f8fa; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#e8eaed; --soft:#a7adb5; --faint:#7d848c; --line:#30343a; --accent:#6ea0ff; --accent-bg:rgba(110,160,255,.12); --bg:#15171a; --bg-soft:#1d2024; } }
+  * { box-sizing: border-box; }
+  body { font: 15px/1.6 -apple-system, "Segoe UI", "Malgun Gothic", sans-serif; color: var(--ink); background: var(--bg); max-width: 720px; margin: 32px auto 80px; padding: 0 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin: 34px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+  label.f { display: block; margin: 14px 0 4px; font-weight: 600; }
+  input[type=text], input[type=number], select { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-soft); color: inherit; font: inherit; }
+  input[type=text] { width: 100%; }
+  .hint { color: var(--soft); font-size: 13px; margin: 2px 0; }
+
+  /* layout list */
+  body { max-width: 1000px; }
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lists h3 { font-size: 13px; margin: 0 0 6px; color: var(--soft); }
+  .layout { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 10px; min-height: 60px; }
+  .layout.over-list { box-shadow: 0 0 0 2px var(--accent-bg); border-color: var(--accent); }
+  .layout li { display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .layout .main { flex: 1; min-width: 0; }
+  .layout .ctrls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; }
+  .layout li:last-child { border-bottom: 0; }
+  .layout li.dragging { opacity: .4; }
+  .layout li.over { box-shadow: inset 0 2px 0 var(--accent); }
+  .layout li.off .name { color: var(--faint); text-decoration: line-through; }
+  .openbtn { border: 1px solid var(--line); background: transparent; color: var(--soft); border-radius: 6px; width: 26px; height: 26px; cursor: pointer; font-size: 11px; }
+  .openbtn[aria-pressed="false"] { color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 760px) { .lists { grid-template-columns: 1fr; } }
+  .grip { cursor: grab; color: var(--faint); font-size: 18px; user-select: none; padding: 0 4px; }
+  .name { flex: 1; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { border: 0; background: transparent; color: var(--soft); padding: 4px 10px; font: inherit; font-size: 12.5px; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+  .mv { border: 1px solid var(--line); background: transparent; color: var(--soft); border-radius: 6px; width: 26px; height: 26px; cursor: pointer; }
+  .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  /* fonts */
+  .font-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; align-items: center; margin: 8px 0; }
+  .preview { margin: 4px 0 0 100px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 18px; }
+  .preview .han { font-size: 26px; }
+
+  .actions { position: sticky; bottom: 0; background: var(--bg); padding: 14px 0; border-top: 1px solid var(--line); margin-top: 30px; display: flex; gap: 10px; align-items: center; }
+  .actions button { padding: 8px 18px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font: inherit; cursor: pointer; }
+  .actions button.ghost { background: transparent; color: var(--soft); border: 1px solid var(--line); }
+  #msg { color: var(--soft); font-size: 13px; }
+</style>
+</head>
+<body>
+<h1>Lexicon for Naver</h1>
+<p class="hint">Changes apply to open dictionary tabs as soon as you save.</p>
+
+<h2>Layout</h2>
+<p class="hint">Drag ⠿ to reorder or to move a block to the other column (or use ↑ ↓ ⇄). <b>Show</b>: always visible.
+<b>Button</b>: hidden, with a toggle in the top bar. <b>Off</b>: not shown or loaded.
+▼ / ◀ sets whether a section starts open or closed. Examples and the Hanja panel share tabs when they're in the same column;
+clicking any hanja opens the Hanja panel.</p>
+<div class="lists">
+  <div><h3>Left</h3><ol class="layout" data-col="left"></ol></div>
+  <div><h3>Right</h3><ol class="layout" data-col="right"></ol></div>
+</div>
+
+<h2>Examples</h2>
+<label class="f" for="initialPages">Naver example pages to load at first</label>
+<input id="initialPages" type="number" min="1" max="20" style="width:90px">
+<p class="hint">Each page adds Naver dictionary examples and Weverse subtitles. More pages = slower first results.</p>
+<label class="f" for="tatoebaLimit">Tatoeba sentences per query (0 = off)</label>
+<input id="tatoebaLimit" type="number" min="0" max="500" style="width:90px">
+
+<h2>Fonts (Google Fonts)</h2>
+<p class="hint">Pick from the list or type any Google Fonts family name exactly as it appears on fonts.google.com.</p>
+<div class="font-row"><span>Korean</span><select id="fontKoSel"></select><input id="fontKo" type="text" placeholder="Other family…"></div>
+<div class="font-row"><span>English</span><select id="fontEnSel"></select><input id="fontEn" type="text" placeholder="Other family…"></div>
+<div class="font-row"><span>Hanja</span><select id="fontHanSel"></select><input id="fontHan" type="text" placeholder="Other family…"></div>
+<div class="font-row"><span>Size</span><input id="fontSize" type="number" min="12" max="22" style="width:90px"><span></span></div>
+<div class="preview" id="preview">
+  <div id="pvKo">산책을 좋아해요. 휴식을 취하다.</div>
+  <div id="pvEn">I like taking a walk. Take a rest.</div>
+  <div id="pvHan" class="han">休息 散策 道 酸</div>
+</div>
+
+<h2>KRDict</h2>
+<label class="f" for="krdictKey">API key</label>
+<input id="krdictKey" type="text" spellcheck="false" autocomplete="off">
+<p class="hint">From krdict.korean.go.kr → Open API. Stored in Chrome sync storage.</p>
+
+<div class="actions"><button id="save" type="button">Save</button><button id="reset" type="button" class="ghost">Reset layout</button><button id="clear" type="button" class="ghost">Clear cache</button><span id="msg"></span></div>
+
+<script src="settings.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

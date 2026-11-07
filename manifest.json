@@ -1,0 +1,88 @@
+{
+  "manifest_version": 3,
+  "name": "Lexicon for Naver",
+  "version": "0.3.0",
+  "description": "Replaces the Naver English–Korean dictionary page with a two-panel view: definitions and etymology on the left, examples on the right.",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://en.dict.naver.com/*",
+    "https://hanja.dict.naver.com/*",
+    "https://en.wiktionary.org/*",
+    "https://krdict.korean.go.kr/*",
+    "https://api.tatoeba.org/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "frames",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://en.dict.naver.com/*"
+      ],
+      "css": [
+        "src/hide.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://en.dict.naver.com/*"
+      ],
+      "js": [
+        "src/settings.js",
+        "src/sanitize.js",
+        "src/sources.js",
+        "src/app.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://en.dict.naver.com/*",
+        "https://hanja.dict.naver.com/*"
+      ],
+      "js": [
+        "src/extract.js",
+        "src/harvest.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://hanja.dict.naver.com/*"
+      ],
+      "css": [
+        "src/panel.css"
+      ],
+      "js": [
+        "src/panel.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/app.css"
+      ],
+      "matches": [
+        "https://en.dict.naver.com/*"
+      ]
+    }
+  ],
+  "options_page": "src/options.html"
+}
