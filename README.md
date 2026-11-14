@@ -1,4 +1,4 @@
-# Lexicon for Naver
+# KoLexicon
 
 A Chrome extension that takes over `en.dict.naver.com` search pages and shows your own layout:
 
@@ -86,7 +86,7 @@ and run `localStorage.lxDebug = 1`, then reload: the frames appear in a strip at
 ## Updating
 
 After pulling new changes (or editing files), go to `chrome://extensions` and click the reload ↻ button on
-**Lexicon for Naver**, then reload the dictionary tab.
+**KoLexicon**, then reload the dictionary tab.
 
 ## Data sources
 
