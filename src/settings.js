@@ -68,7 +68,7 @@
   // Adds <link> tags for the chosen families to a document (Google Fonts must be declared at document level).
   function loadFonts(doc, families) {
     [...new Set(families.filter(Boolean))].forEach((f) => {
-      const id = 'lx-font-' + f.replace(/\W+/g, '-');
+      const id = 'kd-font-' + f.replace(/\W+/g, '-');
       if (doc.getElementById(id)) return;
       const link = doc.createElement('link');
       link.id = id;
@@ -81,5 +81,5 @@
 
   const stack = (f, fallback) => (f ? `"${f.replace(/"/g, '')}", ` : '') + fallback;
 
-  root.LxSettings = { BLOCKS, FONTS, DEFAULTS, normalizeLayout, load, loadFonts, stack };
+  root.KdSettings = { BLOCKS, FONTS, DEFAULTS, normalizeLayout, load, loadFonts, stack };
 })(typeof window !== 'undefined' ? window : globalThis);

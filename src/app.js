@@ -4,8 +4,8 @@
   'use strict';
   if (window.top !== window) return;
 
-  const S = window.LxSources;
-  const CFG = window.LxSettings;
+  const S = window.KdSources;
+  const CFG = window.KdSettings;
   const HANJA_ORIGIN = 'https://hanja.dict.naver.com';
   let settings = { ...CFG.DEFAULTS };
 
@@ -70,10 +70,10 @@
     }
     load(hash) {
       const run = () => new Promise((resolve) => {
-        const frameName = `lx-harvest-${this.name}-${++this.seq}`;
+        const frameName = `kd-harvest-${this.name}-${++this.seq}`;
         let iframe = null;
         const onMsg = (e) => {
-          if (!e.data || e.data.lx !== 'harvest' || e.data.frame !== frameName) return;
+          if (!e.data || e.data.kd !== 'harvest' || e.data.frame !== frameName) return;
           finish(e.data);
         };
         const finish = (v) => {
@@ -117,13 +117,13 @@
   }
 
   // ------------------------------------------------------------------ scaffold
-  const host = h('div', { id: 'lx-host' });
+  const host = h('div', { id: 'kd-host' });
   const shadow = host.attachShadow({ mode: 'open' });
   shadow.appendChild(h('link', { rel: 'stylesheet', href: chrome.runtime.getURL('src/app.css') }));
 
   const input = h('input', { type: 'search', placeholder: '단어 검색 · search Korean or English', autocomplete: 'off', spellcheck: 'false', 'aria-label': 'Search' });
   const form = h('form', { class: 'search', role: 'search', onsubmit: (e) => { e.preventDefault(); go(input.value.trim()); } },
-    h('span', { class: 'brand' }, 'Lexicon'), input, h('button', { type: 'submit' }, 'Search'));
+    h('span', { class: 'brand' }, 'KoDex'), input, h('button', { type: 'submit' }, 'Search'));
   const toggles = h('div', { class: 'toggles' });
   const tools = h('div', { class: 'tools' },
     h('button', { class: 'ghost', type: 'button', title: 'Show the original Naver page', onclick: () => toggleNaver(true) }, 'Naver page'),
@@ -136,10 +136,10 @@
   };
   const cols = h('main', { class: 'cols' }, colEls.left, colEls.right);
   const frameBox = h('div', { class: 'frames', 'aria-hidden': 'true' });
-  try { if (localStorage.getItem('lxDebug')) frameBox.classList.add('debug'); } catch (e) { /* storage blocked */ }
+  try { if (localStorage.getItem('kdDebug')) frameBox.classList.add('debug'); } catch (e) { /* storage blocked */ }
   const app = h('div', { class: 'app' }, header, cols, frameBox);
   shadow.appendChild(app);
-  const backBtn = h('button', { class: 'back', type: 'button', onclick: () => toggleNaver(false) }, '← Lexicon');
+  const backBtn = h('button', { class: 'back', type: 'button', onclick: () => toggleNaver(false) }, '← KoDex');
   shadow.appendChild(backBtn);
 
   const frames = {
@@ -151,7 +151,7 @@
   };
 
   function toggleNaver(showNaver) {
-    document.documentElement.classList.toggle('lx-off', showNaver);
+    document.documentElement.classList.toggle('kd-off', showNaver);
     app.hidden = showNaver;
     backBtn.hidden = !showNaver;
   }
@@ -304,7 +304,7 @@
   }
 
   // ------------------------------------------------------------------ hanja panel
-  const panelFrame = h('iframe', { name: 'lx-panel', title: 'Naver 한자사전' });
+  const panelFrame = h('iframe', { name: 'kd-panel', title: 'Naver 한자사전' });
   const trBtn = h('button', { type: 'button', class: 'ghost', onclick: () => translatePanel() }, 'Translate');
   const trStatus = h('span', { class: 'small muted' });
   const openOut = h('a', { class: 'small', target: '_blank', rel: 'noopener', href: HANJA_ORIGIN }, 'Open in tab ↗');
@@ -342,10 +342,10 @@
 
   window.addEventListener('message', async (e) => {
     if (e.origin !== HANJA_ORIGIN || !e.data || e.source !== panelFrame.contentWindow) return;
-    if (e.data.lx === 'panel-nav') {
+    if (e.data.kd === 'panel-nav') {
       resetTr();
       openOut.href = e.data.href;
-    } else if (e.data.lx === 'panel-texts') {
+    } else if (e.data.kd === 'panel-texts') {
       const texts = e.data.texts || [];
       const map = {};
       let done = 0;
@@ -359,7 +359,7 @@
           trStatus.textContent = `Translating… ${done}/${texts.length}`;
         }
       }));
-      panelFrame.contentWindow.postMessage({ lx: 'apply', map }, HANJA_ORIGIN);
+      panelFrame.contentWindow.postMessage({ kd: 'apply', map }, HANJA_ORIGIN);
       trState = 'translated';
       trBtn.textContent = 'Show original';
       trStatus.textContent = 'Translated on-device · hover for original';
@@ -368,7 +368,7 @@
 
   async function translatePanel() {
     if (!panelFrame.isConnected || trState === 'busy') return;
-    if (trState === 'translated') { panelFrame.contentWindow.postMessage({ lx: 'restore' }, HANJA_ORIGIN); resetTr(); return; }
+    if (trState === 'translated') { panelFrame.contentWindow.postMessage({ kd: 'restore' }, HANJA_ORIGIN); resetTr(); return; }
     if (!('Translator' in self)) { trStatus.textContent = 'Chrome’s on-device translator isn’t available in this browser.'; return; }
     trState = 'busy';
     try {
@@ -380,7 +380,7 @@
         });
       }
       trStatus.textContent = 'Translating…';
-      panelFrame.contentWindow.postMessage({ lx: 'collect' }, HANJA_ORIGIN);
+      panelFrame.contentWindow.postMessage({ kd: 'collect' }, HANJA_ORIGIN);
     } catch (err) {
       trState = 'original';
       trStatus.textContent = 'Translator error: ' + err.message;
@@ -444,7 +444,7 @@
     const my = ++token;
     current = q;
     input.value = q;
-    document.title = `${q} · Lexicon`;
+    document.title = `${q} · KoDex`;
     const alive = () => my === token;
     const en = isEnglish(q);
     ui.context = { hanja: !en, hanjaDetail: false };
@@ -665,15 +665,15 @@
   }
 
   function wireLinks(root) {
-    root.querySelectorAll('a[data-lxq]').forEach((a) => a.addEventListener('click', (e) => {
+    root.querySelectorAll('a[data-kdq]').forEach((a) => a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;
       e.preventDefault();
-      go(a.dataset.lxq);
+      go(a.dataset.kdq);
     }));
-    root.querySelectorAll('a[data-lxhan]').forEach((a) => a.addEventListener('click', (e) => {
+    root.querySelectorAll('a[data-kdhan]').forEach((a) => a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;
       e.preventDefault();
-      openHanja(a.dataset.lxhan);
+      openHanja(a.dataset.kdhan);
     }));
   }
 

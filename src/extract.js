@@ -135,5 +135,5 @@
 
   const api = { extract, clean };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
-  root.LxExtract = api;
+  root.KdExtract = api;
 })(typeof window !== 'undefined' ? window : globalThis);

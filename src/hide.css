@@ -1,4 +1,4 @@
 /* Hide Naver's own page in the top frame. Iframes are untouched (this file is top-frame only).
-   Toggle off with <html class="lx-off">. */
-html:not(.lx-off) > body { visibility: hidden !important; overflow: hidden !important; }
-html:not(.lx-off) { overflow: hidden !important; }
+   Toggle off with <html class="kd-off">. */
+html:not(.kd-off) > body { visibility: hidden !important; overflow: hidden !important; }
+html:not(.kd-off) { overflow: hidden !important; }

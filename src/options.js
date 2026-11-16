@@ -1,5 +1,5 @@
 'use strict';
-const CFG = window.LxSettings;
+const CFG = window.KdSettings;
 const $ = (id) => document.getElementById(id);
 const msg = (t) => { $('msg').textContent = t; clearTimeout(msg.t); msg.t = setTimeout(() => ($('msg').textContent = ''), 3000); };
 let layout = [];

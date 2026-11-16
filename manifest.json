@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Lexicon for Naver",
+  "name": "KoDex",
   "version": "0.3.0",
   "description": "Replaces the Naver English–Korean dictionary page with a two-panel view: definitions and etymology on the left, examples on the right.",
   "permissions": [

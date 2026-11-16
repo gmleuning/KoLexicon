@@ -1,28 +1,28 @@
-/* Naver 한자사전 inside the extension's side panel (html.lx-panel is set by panel.js). Normal visits are untouched. */
-html.lx-panel #u_skip,
-html.lx-panel #header,
-html.lx-panel #aside,
-html.lx-panel #footer,
-html.lx-panel .option_area,
-html.lx-panel #searchSpilayer,
-html.lx-panel .component_socialplugin,
-html.lx-panel ._ad_area,
-html.lx-panel .banner_area,
-html.lx-panel #open_banner,
-html.lx-panel .alert_cp_wrap,
-html.lx-panel .area_analysis,
-html.lx-panel #searchPage_mean,
-html.lx-panel #searchPage_example,
-html.lx-panel .unit_add_wordbook,
-html.lx-panel .component_search_all { display: none !important; }
+/* Naver 한자사전 inside the extension's side panel (html.kd-panel is set by panel.js). Normal visits are untouched. */
+html.kd-panel #u_skip,
+html.kd-panel #header,
+html.kd-panel #aside,
+html.kd-panel #footer,
+html.kd-panel .option_area,
+html.kd-panel #searchSpilayer,
+html.kd-panel .component_socialplugin,
+html.kd-panel ._ad_area,
+html.kd-panel .banner_area,
+html.kd-panel #open_banner,
+html.kd-panel .alert_cp_wrap,
+html.kd-panel .area_analysis,
+html.kd-panel #searchPage_mean,
+html.kd-panel #searchPage_example,
+html.kd-panel .unit_add_wordbook,
+html.kd-panel .component_search_all { display: none !important; }
 
-html.lx-panel, html.lx-panel body { min-width: 0 !important; background: #fff !important; }
-html.lx-panel #wrap,
-html.lx-panel #container,
-html.lx-panel #content {
+html.kd-panel, html.kd-panel body { min-width: 0 !important; background: #fff !important; }
+html.kd-panel #wrap,
+html.kd-panel #container,
+html.kd-panel #content {
   width: auto !important; min-width: 0 !important; max-width: none !important;
   float: none !important; margin: 0 !important;
 }
-html.lx-panel #container { padding: 8px 18px 60px !important; }
-html.lx-panel #content img { max-width: 100% !important; height: auto !important; }
-html.lx-panel [title] { cursor: help; }
+html.kd-panel #container { padding: 8px 18px 60px !important; }
+html.kd-panel #content img { max-width: 100% !important; height: auto !important; }
+html.kd-panel [title] { cursor: help; }

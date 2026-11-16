@@ -130,14 +130,14 @@
       title = decodeURIComponent(u.pathname.replace(/^\/wiki\//, '').replace(/^\.\//, ''));
     } catch (e) { /* ignore */ }
     const text = a.textContent.trim();
-    if (title && HANGUL.test(title) && !title.includes(':')) return { href: url, data: { lxq: title } };
-    if (text && hanOnly(text) === text.replace(/\s/g, '')) return { href: url, data: { lxhan: hanOnly(text) } };
+    if (title && HANGUL.test(title) && !title.includes(':')) return { href: url, data: { kdq: title } };
+    if (text && hanOnly(text) === text.replace(/\s/g, '')) return { href: url, data: { kdhan: hanOnly(text) } };
     return { href: url };
   }
 
   function sanitizeClone(el) {
     const c = stripJunk(el.cloneNode(true));
-    root.LxSanitize(c, wikiLink);
+    root.KdSanitize(c, wikiLink);
     return c;
   }
 
@@ -354,5 +354,5 @@
     return { entries: out, error: out.length ? '' : error };
   }
 
-  root.LxSources = { krdict, krdictEnglish, wikiEnglish, wikiKorean, wikiHanjaWord, wikiChar, tatoeba, hanOnly, HAN, HANGUL, wikiUrl };
+  root.KdSources = { krdict, krdictEnglish, wikiEnglish, wikiKorean, wikiHanjaWord, wikiChar, tatoeba, hanOnly, HAN, HANGUL, wikiUrl };
 })(typeof window !== 'undefined' ? window : globalThis);

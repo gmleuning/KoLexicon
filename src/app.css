@@ -1,4 +1,4 @@
-/* Lexicon for Naver — lives inside a shadow root. */
+/* KoDex — lives inside a shadow root. */
 :host { all: initial; }
 .app, .back {
   --ink: #1a1a1a;

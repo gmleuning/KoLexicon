@@ -1,9 +1,9 @@
-// Runs in hanja.dict.naver.com frames. Only acts in the extension's side-panel iframe (window.name "lx-panel"):
-// adds html.lx-panel (panel.css trims Naver's chrome) and handles on-device translation requests from the parent.
+// Runs in hanja.dict.naver.com frames. Only acts in the extension's side-panel iframe (window.name "kd-panel"):
+// adds html.kd-panel (panel.css trims Naver's chrome) and handles on-device translation requests from the parent.
 (function () {
   'use strict';
-  if (window.top === window || window.name !== 'lx-panel') return;
-  document.documentElement.classList.add('lx-panel');
+  if (window.top === window || window.name !== 'kd-panel') return;
+  document.documentElement.classList.add('kd-panel');
 
   const PARENT = 'https://en.dict.naver.com';
   const HANGUL = /[가-힣]/;
@@ -45,15 +45,15 @@
   window.addEventListener('message', (e) => {
     if (e.origin !== PARENT || !e.data) return;
     const d = e.data;
-    if (d.lx === 'collect') window.parent.postMessage({ lx: 'panel-texts', texts: collect() }, PARENT);
-    else if (d.lx === 'apply') apply(d.map || {});
-    else if (d.lx === 'restore') restore();
+    if (d.kd === 'collect') window.parent.postMessage({ kd: 'panel-texts', texts: collect() }, PARENT);
+    else if (d.kd === 'apply') apply(d.map || {});
+    else if (d.kd === 'restore') restore();
   });
 
   const announce = () => {
     translated = false;
     nodes = [];
-    window.parent.postMessage({ lx: 'panel-nav', href: location.href, title: document.title }, PARENT);
+    window.parent.postMessage({ kd: 'panel-nav', href: location.href, title: document.title }, PARENT);
   };
   window.addEventListener('hashchange', announce);
   window.addEventListener('popstate', announce);

@@ -33,7 +33,7 @@ async function doFetch(url, noCache) {
     if (hit) return { ok: hit.status >= 200 && hit.status < 300, status: hit.status, body: hit.body, cached: true };
   }
   try {
-    const res = await fetch(url, { headers: { 'Api-User-Agent': 'LexiconForNaver/0.1 (personal browser extension)' } });
+    const res = await fetch(url, { headers: { 'Api-User-Agent': 'KoDex/0.3.0 (personal browser extension)' } });
     const body = await res.text();
     // Cache successes and 404s (missing Wiktionary pages), not transient errors.
     if (res.ok || res.status === 404) await store(url, res.status, body);

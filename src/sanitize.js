@@ -44,5 +44,5 @@
     walk(node);
     return node;
   }
-  root.LxSanitize = sanitize;
+  root.KdSanitize = sanitize;
 })(typeof window !== 'undefined' ? window : globalThis);
